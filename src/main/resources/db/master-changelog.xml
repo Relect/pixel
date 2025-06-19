@@ -4,6 +4,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-    <include file="/db/migration/001-create-table.sql"/>
-<!--    <include file="db/migration/002-insert-data.sql"/>-->
+    <include file="db/migration/001-create-table-user.sql"/>
+    <include file="db/migration/002-create-table-account.sql"/>
+    <include file="db/migration/003-create-table-email_data.sql"/>
+    <include file="db/migration/004-create-table-phone_data.sql"/>
 </databaseChangeLog>
