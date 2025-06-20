@@ -10,3 +10,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=test
       - TZ=Europe/Moscow
+
+  redis:
+    image: redis:7.2
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
