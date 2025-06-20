@@ -5,12 +5,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,4 +31,16 @@ public class User {
     LocalDate dateOfBirth;
     @Size(min = 8, max = 500, message = "Password must be between 8 and 500 characters")
     String password;
+
+    @OneToMany(mappedBy = "user")
+    @NotEmpty
+    List<EmailData> emailData;
+
+    @OneToMany(mappedBy = "user")
+    @NotEmpty
+    List<PhoneData> phoneData;
+
+    @OneToOne(mappedBy = "user")
+    @NotNull
+    Account account;
 }

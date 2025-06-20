@@ -23,5 +23,6 @@ public class Account {
 
     @OneToOne
     User user;
+
     BigDecimal balance;
 }

@@ -4,6 +4,6 @@
 
 CREATE TABLE IF NOT EXISTS email_data (
     id bigserial PRIMARY KEY,
-    user_id bigint,
-    email varchar(200) unique,
-    FOREIGN KEY (user_id) References "user" (id));
+    user_id bigint NOT NULL,
+    email varchar(200) NOT NULL unique,
+    FOREIGN KEY (user_id) References "user" (id) ON DELETE CASCADE);

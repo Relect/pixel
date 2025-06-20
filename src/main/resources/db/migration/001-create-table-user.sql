@@ -4,9 +4,9 @@
 
 CREATE TABLE IF NOT EXISTS "user" (
     id bigserial PRIMARY KEY,
-    name varchar(500),
-    date_of_birth date,
-    password varchar(500));
+    name varchar(500) NOT NULL,
+    date_of_birth date NOT NULL,
+    password varchar(500) NOT NULL);
 
 
 
