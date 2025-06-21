@@ -22,6 +22,6 @@ public class PhoneData {
 
     @ManyToOne
     User user;
-    @Size(min = 8, max = 500, message = "lenght 13 symbol, format 79207865432")
+    @Size(min = 11, max = 11, message = "lenght 13 symbol, format 79207865432")
     String phone;
 }
