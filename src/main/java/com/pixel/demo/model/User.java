@@ -1,6 +1,8 @@
 package com.pixel.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +21,8 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+
 @Entity
 @Getter
 @Setter
@@ -36,17 +40,21 @@ public class User {
     LocalDate dateOfBirth;
 
     @Size(min = 8, max = 500, message = "Password must be between 8 and 500 characters")
+    @JsonProperty(access = WRITE_ONLY)
     String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
+    @JsonIgnoreProperties("user")
     List<EmailData> emailData;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
+    @JsonIgnoreProperties("user")
     List<PhoneData> phoneData;
 
     @OneToOne(mappedBy = "user")
     @NotNull
+    @JsonIgnoreProperties("user")
     Account account;
 }
