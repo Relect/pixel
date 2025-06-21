@@ -27,9 +27,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     String name;
+
     @JsonFormat(pattern = "dd.MM.yyyy")
     LocalDate dateOfBirth;
+
     @Size(min = 8, max = 500, message = "Password must be between 8 and 500 characters")
     String password;
 
