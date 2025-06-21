@@ -11,5 +11,8 @@ VALUES (1, 100.00);
 INSERT INTO email_data (user_id, email)
 VALUES (1, 'mail@example.com');
 
+INSERT INTO email_data (user_id, email)
+VALUES (1, '2@example.com');
+
 INSERT INTO phone_data (user_id, phone)
 VALUES (1, '79201234567');

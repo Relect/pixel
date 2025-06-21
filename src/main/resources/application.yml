@@ -30,5 +30,6 @@ logging:
   level:
     org:
       springframework:
+        security: DEBUG
         data:
           redis: DEBUG
