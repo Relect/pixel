@@ -1,8 +1,8 @@
 package com.pixel.demo.config.Jwt;
 
 import com.pixel.demo.model.User;
+import com.pixel.demo.security.CustomUserDetails;
 import com.pixel.demo.security.JWTUtils;
-import com.pixel.demo.service.CustomUserDetailsService;
 import com.pixel.demo.service.RedisBlacklistService;
 import com.pixel.demo.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -24,7 +24,6 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JWTUtils jwtUtils;
-    private final CustomUserDetailsService customUserDetailsService;
     private final UserService userService;
     private final RedisBlacklistService blacklistService;
 
@@ -48,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Optional<User> userOpt = userService.findById(userId);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(user.getEmailData().get(0).getEmail());
+                UserDetails userDetails = new CustomUserDetails(user, user.getEmailData().get(0).getEmail());
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

@@ -1,5 +1,7 @@
 package com.pixel.demo.api;
 
+import com.pixel.demo.service.EmailService;
+import com.pixel.demo.service.PhoneService;
 import com.pixel.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
     private final UserService userService;
+    private final PhoneService phoneService;
+    private final EmailService emailService;
 
     @PostMapping("/email/{newEmail}")
     public ResponseEntity<String > createEmail(@PathVariable String newEmail) {
@@ -29,7 +33,7 @@ public class Controller {
 
     @DeleteMapping("/email/{email}")
     public void deleteEmail(@PathVariable String email) {
-        userService.deleteEmail(email);
+        emailService.deleteEmail(email);
     }
 
     @PostMapping("/phone/{newPhone}")
@@ -44,6 +48,6 @@ public class Controller {
 
     @DeleteMapping("/phone/{phone}")
     public void deletePhone(@PathVariable String phone) {
-        userService.deletePhone(phone);
+        phoneService.deletePhone(phone);
     }
 }
