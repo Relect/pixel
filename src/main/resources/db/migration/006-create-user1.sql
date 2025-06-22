@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset Gennadiy:004
+--changeset Gennadiy:006
 --preconditions onFail:HALT onError:HALT
 
 INSERT INTO "user" (name, date_of_birth, password)
@@ -9,10 +9,10 @@ INSERT INTO account (user_id, balance)
 VALUES (1, 100.00);
 
 INSERT INTO email_data (user_id, email)
-VALUES (1, '1@example.com');
+VALUES (1, 'email1@example.com');
 
 INSERT INTO email_data (user_id, email)
-VALUES (1, '2@example.com');
+VALUES (1, 'email2@example.com');
 
 INSERT INTO phone_data (user_id, phone)
 VALUES (1, '79201234567');
