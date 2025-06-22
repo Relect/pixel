@@ -43,12 +43,12 @@ public class User {
     @JsonProperty(access = WRITE_ONLY)
     String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
     @JsonIgnoreProperties("user")
     List<EmailData> emailData;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
     @JsonIgnoreProperties("user")
     List<PhoneData> phoneData;
