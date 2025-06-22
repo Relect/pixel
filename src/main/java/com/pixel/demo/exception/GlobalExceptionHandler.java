@@ -39,8 +39,14 @@ public class GlobalExceptionHandler implements HandlerInterceptor {
         return true;
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handle(EntityNotFoundException ex) {
+        log.warn("Entity not found", ex);
+        return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, List.of());
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
+    public ResponseEntity<ErrorResponse> handle(ConstraintViolationException ex) {
         List<String> errors = ex.getConstraintViolations().stream()
                 .map(violation -> String.format("%s: %s",
                         violation.getPropertyPath(),
@@ -50,22 +56,28 @@ public class GlobalExceptionHandler implements HandlerInterceptor {
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, errors);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException ex) {
-        log.warn("Entity not found", ex);
-        return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND, List.of());
+    @ExceptionHandler(LastPhoneDeletionException.class)
+    public ResponseEntity<ErrorResponse> handle(LastPhoneDeletionException ex) {
+        log.warn(ex.getMessage());
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
+    }
+
+    @ExceptionHandler(LastEmailDeletionException.class)
+    public ResponseEntity<ErrorResponse> handle(LastEmailDeletionException ex) {
+        log.warn(ex.getMessage());
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponse> handle(IllegalArgumentException ex) {
         log.warn("Invalid input", ex);
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidJson(HttpMessageNotReadableException ex) {
+    public ResponseEntity<ErrorResponse> handle(HttpMessageNotReadableException ex) {
         Throwable rootCause = ex.getMostSpecificCause();
-        log.warn("Ошибка парсинга JSON", rootCause);
+        log.warn("Error parsing JSON", rootCause);
         return buildResponse(rootCause.getMessage(), HttpStatus.BAD_REQUEST, List.of());
     }
 
