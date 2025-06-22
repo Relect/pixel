@@ -1,6 +1,7 @@
 package com.pixel.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +21,9 @@ public class PhoneData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     User user;
+
     @Size(min = 11, max = 11, message = "lenght 13 symbol, format 79207865432")
     String phone;
 }
