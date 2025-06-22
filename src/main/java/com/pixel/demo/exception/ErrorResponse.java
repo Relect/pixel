@@ -1,9 +1,11 @@
 package com.pixel.demo.exception;
 
-import java.util.Map;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 public record ErrorResponse(
-        String code,
+        HttpStatus status,
         String message,
-        Map<String, Object> details
+        List<String> details
 ) {}
