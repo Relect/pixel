@@ -9,7 +9,7 @@ INSERT INTO account (user_id, balance)
 VALUES (1, 100.00);
 
 INSERT INTO email_data (user_id, email)
-VALUES (1, 'mail@example.com');
+VALUES (1, '1@example.com');
 
 INSERT INTO email_data (user_id, email)
 VALUES (1, '2@example.com');
