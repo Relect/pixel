@@ -1,11 +1,11 @@
 package com.pixel.demo.service;
 
-import com.pixel.demo.exception.LastEmailDeletionException;
-import com.pixel.demo.exception.LastPhoneDeletionException;
 import com.pixel.demo.model.EmailData;
 import com.pixel.demo.model.PhoneData;
+import com.pixel.demo.model.User;
 import com.pixel.demo.repository.EmailDataRepository;
 import com.pixel.demo.repository.PhoneDataRepository;
+import com.pixel.demo.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final UserRepository userRepository;
     private final EmailDataRepository emailDataRepository;
     private final PhoneDataRepository phoneDataRepository;
 
@@ -23,11 +24,9 @@ public class UserService {
         PhoneData phoneToDelete = phoneDataRepository.findPhoneDataByPhone(phone)
                 .orElseThrow(() -> new EntityNotFoundException("Phone:" + phone + " not found."));
 
-        long phoneCount = phoneDataRepository.countByUserId(phoneToDelete.getUser().getId());
-        if (phoneCount == 1) {
-            throw new LastPhoneDeletionException(phone);
-        }
-        phoneDataRepository.delete(phoneToDelete);
+        User user = phoneToDelete.getUser();
+        user.getPhoneData().remove(phoneToDelete);
+        userRepository.save(user);
     }
 
     @Transactional
@@ -35,10 +34,14 @@ public class UserService {
         EmailData emailToDelete = emailDataRepository.findEmailDataByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Email:" + email + " not found."));
 
-        long emailCount = emailDataRepository.countByUserId(emailToDelete.getUser().getId());
-        if (emailCount == 1) {
-            throw new LastEmailDeletionException(email);
+        User user = emailToDelete.getUser();
+        user.getEmailData().remove(emailToDelete);
+
+        try {
+            Thread.sleep(5_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        emailDataRepository.delete(emailToDelete);
+        userRepository.save(user);
     }
 }
