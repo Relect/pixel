@@ -2,8 +2,6 @@ package com.pixel.demo.exception;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.List;
@@ -21,23 +18,6 @@ import java.util.stream.Collectors;
 @Hidden
 @RestControllerAdvice
 public class GlobalExceptionHandler implements HandlerInterceptor {
-
-    @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
-
-        if (handler instanceof HandlerMethod) {
-            String ip = request.getHeader("X-Forwarded-For");
-            if (ip == null) ip = request.getRemoteAddr();
-
-            String method = request.getMethod();
-            String uri = request.getRequestURI();
-
-            log.info("Request: {} {} from IP: {}", method, uri, ip);
-        }
-        return true;
-    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handle(EntityNotFoundException ex) {
