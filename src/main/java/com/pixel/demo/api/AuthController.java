@@ -1,4 +1,4 @@
-package com.pixel.demo.API;
+package com.pixel.demo.api;
 
 import com.pixel.demo.dto.ReqRes;
 import com.pixel.demo.service.AuthService;

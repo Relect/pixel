@@ -3,6 +3,7 @@ package com.pixel.demo.service;
 
 import com.pixel.demo.dto.ReqRes;
 import com.pixel.demo.repository.UserRepository;
+import com.pixel.demo.security.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    private final JWTUtils jwtUtils;
 
     public ReqRes signIn(ReqRes signinRequest) {
         ReqRes response = new ReqRes();
@@ -29,6 +31,8 @@ public class AuthService {
             } else {
                 userRepository.findByPhone(username).ifPresent(response::setUser);
             }
+            String token = jwtUtils.generateToken(response.getUser().getId());
+            response.setToken(token);
             response.setStatusCode(200);
             response.setMessage("Successfully Signed In");
 
