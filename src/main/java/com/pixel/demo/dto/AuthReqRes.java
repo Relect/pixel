@@ -2,7 +2,6 @@ package com.pixel.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.pixel.demo.model.User;
 import lombok.Data;
 
 @Data
@@ -13,8 +12,7 @@ public class AuthReqRes {
     private int statusCode;
     private String error;
     private String message;
-    private String token;
     private String username;
     private String password;
-    private User user;
+    private String token;
 }
