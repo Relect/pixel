@@ -1,8 +1,11 @@
 package com.pixel.demo.service;
 
 import com.pixel.demo.dto.RequestEmailDto;
+import com.pixel.demo.dto.ResponseEmailDto;
 import com.pixel.demo.exception.LastEmailDeletionException;
+import com.pixel.demo.mapper.EmailMapper;
 import com.pixel.demo.model.EmailData;
+import com.pixel.demo.model.User;
 import com.pixel.demo.repository.EmailDataRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +19,27 @@ import java.util.List;
 public class EmailService {
 
     private final EmailDataRepository emailDataRepository;
+    private final EmailMapper emailMapper;
 
     @Transactional
-    public EmailData addEmail(String email, Long userId) {
-        return null;
+    public ResponseEmailDto addEmail(String email, User user) {
+
+        EmailData emailData = new EmailData();
+        emailData.setUser(user);
+        emailData.setEmail(email);
+        emailData = emailDataRepository.save(emailData);
+        return emailMapper.toDto(emailData);
     }
 
     @Transactional
-    public EmailData updateEmail(RequestEmailDto emailDto, Long userId) {
-        
+    public ResponseEmailDto updateEmail(RequestEmailDto emailDto, User user) {
+
+        EmailData emailData = emailDataRepository.findEmailDataByEmail(emailDto.oldEmail())
+                .orElseThrow(() -> new EntityNotFoundException("Email:" + emailDto.oldEmail() + " not found."));
+
+        emailData.setEmail(emailDto.email());
+        emailData = emailDataRepository.save(emailData);
+        return emailMapper.toDto(emailData);
     }
 
     @Transactional
@@ -35,12 +50,6 @@ public class EmailService {
                 .filter(emailData -> emailData.getEmail().equals(email))
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Email:" + email + " not found."));
-
-        try {
-            Thread.sleep(5_000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         if (emailDataList.size() == 1) {
             throw new LastEmailDeletionException(email);

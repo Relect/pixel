@@ -11,7 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PhoneDataRepository extends JpaRepository<PhoneData, Long> {
+
+    @Query("SELECT p FROM PhoneData p WHERE p.phone = :phone")
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<PhoneData> findPhoneDataByPhone(String phone);
+
     @Query("SELECT p FROM PhoneData p WHERE p.user.id = :userId")
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<PhoneData> findPhoneDataByUserId(@Param("userId") Long userId);

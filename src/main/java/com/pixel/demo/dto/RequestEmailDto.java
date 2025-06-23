@@ -1,14 +1,6 @@
 package com.pixel.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import jakarta.validation.constraints.Email;
 
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class RequestEmailDto {
-
-    String oldEmail;
-    String email;
-}
+public record RequestEmailDto(@Email(message = "email must be correct") String oldEmail,
+                              @Email(message = "email must be correct") String email) {}

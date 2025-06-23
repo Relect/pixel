@@ -1,4 +1,3 @@
 package com.pixel.demo.dto;
 
-public class ResponseEmailDto {
-}
+public record ResponseEmailDto(Long id, Long userId, String email){}

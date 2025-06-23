@@ -1,14 +1,13 @@
 package com.pixel.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import jakarta.validation.constraints.Pattern;
 
-@Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class RequestPhoneDto {
-
-    String oldPhone;
-    String phone;
-}
+public record RequestPhoneDto (
+    @Pattern(
+            regexp = "7\\d{10|$",
+            message = "Телефон должен быть в формате  79207865432")
+    String oldPhone,
+    @Pattern(
+            regexp = "7\\d{10|$",
+            message = "Телефон должен быть в формате  79207865432")
+    String phone) {}
