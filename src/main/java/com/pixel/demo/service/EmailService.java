@@ -32,7 +32,7 @@ public class EmailService {
     }
 
     @Transactional
-    public ResponseEmailDto updateEmail(RequestEmailDto emailDto, User user) {
+    public ResponseEmailDto updateEmail(RequestEmailDto emailDto) {
 
         EmailData emailData = emailDataRepository.findEmailDataByEmail(emailDto.oldEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Email:" + emailDto.oldEmail() + " not found."));

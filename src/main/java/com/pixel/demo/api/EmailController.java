@@ -36,10 +36,9 @@ public class EmailController {
     }
 
     @PutMapping()
-    public ResponseEntity<ResponseEmailDto> updateEmail(@RequestBody @Valid RequestEmailDto emailDto,
-                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
-        User user = userDetails.getUser();
-        ResponseEmailDto responseEmailDto = emailService.updateEmail(emailDto, user);
+    public ResponseEntity<ResponseEmailDto> updateEmail(@RequestBody @Valid RequestEmailDto emailDto) {
+
+        ResponseEmailDto responseEmailDto = emailService.updateEmail(emailDto);
         return ResponseEntity.ok(responseEmailDto);
     }
 
