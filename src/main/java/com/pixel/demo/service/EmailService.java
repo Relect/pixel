@@ -1,5 +1,6 @@
 package com.pixel.demo.service;
 
+import com.pixel.demo.dto.RequestEmailDto;
 import com.pixel.demo.exception.LastEmailDeletionException;
 import com.pixel.demo.model.EmailData;
 import com.pixel.demo.repository.EmailDataRepository;
@@ -17,19 +18,32 @@ public class EmailService {
     private final EmailDataRepository emailDataRepository;
 
     @Transactional
-    public void deleteEmail(String email) {
-        EmailData emailToDelete = emailDataRepository.findEmailDataByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Email:" + email + " not found."));
+    public EmailData addEmail(String email, Long userId) {
+        return null;
+    }
 
-        List<EmailData> emailDataList = emailDataRepository.findEmailDataByUserId(emailToDelete.getUser().getId());
-        if (emailDataList.size() == 1) {
-            throw new LastEmailDeletionException(email);
-        }
+    @Transactional
+    public EmailData updateEmail(RequestEmailDto emailDto, Long userId) {
+        
+    }
+
+    @Transactional
+    public void deleteEmail(String email, Long userId) {
+
+        List<EmailData> emailDataList = emailDataRepository.findEmailDataByUserId(userId);
+        EmailData emailToDelete = emailDataList.stream()
+                .filter(emailData -> emailData.getEmail().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Email:" + email + " not found."));
 
         try {
             Thread.sleep(5_000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        if (emailDataList.size() == 1) {
+            throw new LastEmailDeletionException(email);
         }
         emailDataRepository.delete(emailToDelete);
     }

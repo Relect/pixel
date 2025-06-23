@@ -1,6 +1,7 @@
 package com.pixel.demo.security;
 
 import com.pixel.demo.model.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +10,7 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
+    @Getter
     private final User user;
     private final String username; // Будет хранить email или телефон
 
@@ -16,6 +18,7 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
         this.username = username;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

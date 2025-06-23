@@ -1,6 +1,6 @@
 package com.pixel.demo.api;
 
-import com.pixel.demo.dto.ReqRes;
+import com.pixel.demo.dto.AuthReqRes;
 import com.pixel.demo.service.AuthService;
 import com.pixel.demo.service.RedisBlacklistService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class AuthController {
     private final RedisBlacklistService blacklistService;
 
     @PostMapping("/signin")
-    public ResponseEntity<ReqRes> signIn(@RequestBody ReqRes signInRequest){
+    public ResponseEntity<AuthReqRes> signIn(@RequestBody AuthReqRes signInRequest){
         return ResponseEntity.ok(authService.signIn(signInRequest));
     }
 

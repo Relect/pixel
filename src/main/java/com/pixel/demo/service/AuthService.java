@@ -1,7 +1,7 @@
 package com.pixel.demo.service;
 
 
-import com.pixel.demo.dto.ReqRes;
+import com.pixel.demo.dto.AuthReqRes;
 import com.pixel.demo.repository.UserRepository;
 import com.pixel.demo.security.JWTUtils;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JWTUtils jwtUtils;
 
-    public ReqRes signIn(ReqRes signinRequest) {
-        ReqRes response = new ReqRes();
+    public AuthReqRes signIn(AuthReqRes signinRequest) {
+        AuthReqRes response = new AuthReqRes();
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
