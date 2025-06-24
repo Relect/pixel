@@ -1,7 +1,7 @@
 package com.pixel.demo.service;
 
-import com.pixel.demo.dto.RequestEmailDto;
-import com.pixel.demo.dto.ResponseEmailDto;
+import com.pixel.demo.dto.EmaiReqlDto;
+import com.pixel.demo.dto.EmaiReslDto;
 import com.pixel.demo.exception.LastEmailDeletionException;
 import com.pixel.demo.mapper.EmailMapper;
 import com.pixel.demo.model.EmailData;
@@ -22,7 +22,7 @@ public class EmailService {
     private final EmailMapper emailMapper;
 
     @Transactional
-    public ResponseEmailDto addEmail(String email, User user) {
+    public EmaiReslDto addEmail(String email, User user) {
 
         EmailData emailData = new EmailData();
         emailData.setUser(user);
@@ -32,7 +32,7 @@ public class EmailService {
     }
 
     @Transactional
-    public ResponseEmailDto updateEmail(RequestEmailDto emailDto) {
+    public EmaiReslDto updateEmail(EmaiReqlDto emailDto) {
 
         EmailData emailData = emailDataRepository.findEmailDataByEmail(emailDto.oldEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Email:" + emailDto.oldEmail() + " not found."));

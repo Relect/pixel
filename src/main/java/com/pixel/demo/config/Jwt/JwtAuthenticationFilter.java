@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Optional<User> userOpt = userService.findById(userId);
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
-                UserDetails userDetails = new CustomUserDetails(user, user.getEmailData().get(0).getEmail());
+                UserDetails userDetails = new CustomUserDetails(user, user.getEmailDataList().get(0).getEmail());
                 UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

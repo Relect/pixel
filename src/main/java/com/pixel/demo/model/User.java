@@ -47,12 +47,12 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
     @JsonIgnoreProperties("user")
-    List<EmailData> emailData = new ArrayList<>();
+    List<EmailData> emailDataList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
     @JsonIgnoreProperties("user")
-    List<PhoneData> phoneData = new ArrayList<>();
+    List<PhoneData> phoneDataList = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")
     @NotNull

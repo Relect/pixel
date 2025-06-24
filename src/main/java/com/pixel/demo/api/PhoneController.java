@@ -1,7 +1,7 @@
 package com.pixel.demo.api;
 
-import com.pixel.demo.dto.RequestPhoneDto;
-import com.pixel.demo.dto.ResponsePhoneDto;
+import com.pixel.demo.dto.PhoneReqDto;
+import com.pixel.demo.dto.PhoneResDto;
 import com.pixel.demo.model.User;
 import com.pixel.demo.security.CustomUserDetails;
 import com.pixel.demo.service.PhoneService;
@@ -28,7 +28,7 @@ public class PhoneController {
     private final PhoneService phoneService;
 
     @PostMapping("{newPhone}")
-    public ResponseEntity<ResponsePhoneDto> createPhone(
+    public ResponseEntity<PhoneResDto> createPhone(
             @PathVariable
             @Pattern(
                     regexp = "^7\\d{10}$",
@@ -37,15 +37,15 @@ public class PhoneController {
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         User user = userDetails.getUser();
-        ResponsePhoneDto responsePhoneDto = phoneService.addPhone(newPhone, user);
-        return ResponseEntity.ok(responsePhoneDto);
+        PhoneResDto phoneResDto = phoneService.addPhone(newPhone, user);
+        return ResponseEntity.ok(phoneResDto);
     }
 
     @PutMapping()
-    public ResponseEntity<ResponsePhoneDto> updatePhone(@RequestBody @Valid RequestPhoneDto phoneDto) {
+    public ResponseEntity<PhoneResDto> updatePhone(@RequestBody @Valid PhoneReqDto phoneDto) {
 
-        ResponsePhoneDto responsePhoneDto = phoneService.updatePhone(phoneDto);
-        return ResponseEntity.ok(responsePhoneDto);
+        PhoneResDto phoneResDto = phoneService.updatePhone(phoneDto);
+        return ResponseEntity.ok(phoneResDto);
     }
 
     @DeleteMapping("/{phone}")

@@ -1,7 +1,7 @@
 package com.pixel.demo.service;
 
-import com.pixel.demo.dto.RequestPhoneDto;
-import com.pixel.demo.dto.ResponsePhoneDto;
+import com.pixel.demo.dto.PhoneReqDto;
+import com.pixel.demo.dto.PhoneResDto;
 import com.pixel.demo.exception.LastPhoneDeletionException;
 import com.pixel.demo.mapper.PhoneMapper;
 import com.pixel.demo.model.PhoneData;
@@ -22,7 +22,7 @@ public class PhoneService {
     private final PhoneMapper phoneMapper;
 
     @Transactional
-    public ResponsePhoneDto addPhone(String phone, User user) {
+    public PhoneResDto addPhone(String phone, User user) {
 
         PhoneData phoneData = new PhoneData();
         phoneData.setUser(user);
@@ -32,7 +32,7 @@ public class PhoneService {
     }
 
     @Transactional
-    public ResponsePhoneDto updatePhone(RequestPhoneDto phoneDto) {
+    public PhoneResDto updatePhone(PhoneReqDto phoneDto) {
 
         PhoneData phoneData = phoneDataRepository.findPhoneDataByPhone(phoneDto.oldPhone())
                 .orElseThrow(() -> new EntityNotFoundException("Phone:" + phoneDto.oldPhone() + " not found."));

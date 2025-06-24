@@ -1,14 +1,14 @@
 package com.pixel.demo.mapper;
 
-import com.pixel.demo.dto.PhoneResDto;
-import com.pixel.demo.model.PhoneData;
+import com.pixel.demo.dto.AccountResDto;
+import com.pixel.demo.model.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface PhoneMapper {
+public interface AccountMapper {
 
     @Mapping(source = "user.id", target = "userId")
-    PhoneResDto toDto(PhoneData phoneData);
+    AccountResDto toDto(Account account);
 }
