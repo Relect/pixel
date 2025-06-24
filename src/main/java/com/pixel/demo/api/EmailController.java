@@ -1,7 +1,7 @@
 package com.pixel.demo.api;
 
 import com.pixel.demo.dto.EmaiReqlDto;
-import com.pixel.demo.dto.EmaiReslDto;
+import com.pixel.demo.dto.EmaiResDto;
 import com.pixel.demo.model.User;
 import com.pixel.demo.security.CustomUserDetails;
 import com.pixel.demo.service.EmailService;
@@ -28,18 +28,18 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/{newEmail}")
-    public ResponseEntity<EmaiReslDto> createEmail(@PathVariable @Email(message = "email must be correct") String newEmail,
-                                                   @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<EmaiResDto> createEmail(@PathVariable @Email(message = "email must be correct") String newEmail,
+                                                  @AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
-        EmaiReslDto emaiReslDto = emailService.addEmail(newEmail, user);
-        return ResponseEntity.ok(emaiReslDto);
+        EmaiResDto emaiResDto = emailService.addEmail(newEmail, user);
+        return ResponseEntity.ok(emaiResDto);
     }
 
     @PutMapping()
-    public ResponseEntity<EmaiReslDto> updateEmail(@RequestBody @Valid EmaiReqlDto emailDto) {
+    public ResponseEntity<EmaiResDto> updateEmail(@RequestBody @Valid EmaiReqlDto emailDto) {
 
-        EmaiReslDto emaiReslDto = emailService.updateEmail(emailDto);
-        return ResponseEntity.ok(emaiReslDto);
+        EmaiResDto emaiResDto = emailService.updateEmail(emailDto);
+        return ResponseEntity.ok(emaiResDto);
     }
 
     @DeleteMapping("/{email}")

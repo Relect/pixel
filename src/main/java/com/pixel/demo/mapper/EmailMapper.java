@@ -1,6 +1,6 @@
 package com.pixel.demo.mapper;
 
-import com.pixel.demo.dto.EmaiReslDto;
+import com.pixel.demo.dto.EmaiResDto;
 import com.pixel.demo.model.EmailData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,5 +10,5 @@ import org.mapstruct.MappingConstants;
 public interface EmailMapper {
 
     @Mapping(source = "user.id", target = "userId")
-    EmaiReslDto toDto(EmailData emailData);
+    EmaiResDto toDto(EmailData emailData);
 }

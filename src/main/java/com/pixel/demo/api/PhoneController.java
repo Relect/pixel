@@ -32,7 +32,7 @@ public class PhoneController {
             @PathVariable
             @Pattern(
                     regexp = "^7\\d{10}$",
-                    message = "Телефон должен быть в формате  79207865432")
+                    message = "Phone must be in format 79207865432")
             String newPhone,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
@@ -53,7 +53,7 @@ public class PhoneController {
             @PathVariable
             @Pattern(
                     regexp = "^7\\d{10}$",
-                    message = "Телефон должен быть в формате  79207865432")
+                    message = "Phone must be in format 79207865432")
             String phone,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 

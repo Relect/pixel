@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -28,32 +27,45 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final RedisBlacklistService blacklistService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+
         final String authHeader = request.getHeader("Authorization");
-        final String jwtToken;
-        final String userIdStr;
         if (authHeader == null || authHeader.isBlank()) {
             filterChain.doFilter(request, response);
             return;
         }
-        jwtToken = authHeader.substring(7);
+
+        final String jwtToken = authHeader.substring(7);
         if (blacklistService.isBlacklisted(jwtToken)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token in blacklist");
             return;
         }
-        userIdStr = jwtUtils.extractUserId(jwtToken);
-        if (userIdStr != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Long userId = Long.parseLong(userIdStr);
-            Optional<User> userOpt = userService.findById(userId);
-            if (userOpt.isPresent()) {
-                User user = userOpt.get();
-                UserDetails userDetails = new CustomUserDetails(user, user.getEmailDataList().get(0).getEmail());
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
-                SecurityContextHolder.getContext().setAuthentication(token);
-            }
+
+        final String userIdStr = jwtUtils.extractUserId(jwtToken);
+        if (userIdStr == null || SecurityContextHolder.getContext().getAuthentication() != null) {
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        try {
+            final Long userId = Long.parseLong(userIdStr);
+            User user = userService.findUserById(userId);
+            UserDetails userDetails = new CustomUserDetails(user, user.getEmailDataList().get(0).getEmail());
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid user ID format");
+            return;
+        } catch (IndexOutOfBoundsException e) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User has no email");
+            return;
+        }
+
         filterChain.doFilter(request, response);
     }
 }
