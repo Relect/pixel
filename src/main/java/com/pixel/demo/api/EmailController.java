@@ -35,7 +35,7 @@ public class EmailController {
         return ResponseEntity.ok(emaiResDto);
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<EmaiResDto> updateEmail(@RequestBody @Valid EmaiReqlDto emailDto) {
 
         EmaiResDto emaiResDto = emailService.updateEmail(emailDto);

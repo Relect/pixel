@@ -48,7 +48,12 @@ public class GlobalExceptionHandler implements HandlerInterceptor {
     @ExceptionHandler(LastEmailDeletionException.class)
     public ResponseEntity<ErrorResponse> handle(LastEmailDeletionException ex) {
         log.warn(ex.getMessage());
-        //TODO сделать везде логи
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
+    }
+
+    @ExceptionHandler(NotEnoughMoney.class)
+    public ResponseEntity<ErrorResponse> handle(NotEnoughMoney ex) {
+        log.warn(ex.getMessage());
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
     }
 

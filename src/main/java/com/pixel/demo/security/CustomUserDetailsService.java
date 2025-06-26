@@ -1,8 +1,7 @@
-package com.pixel.demo.service;
+package com.pixel.demo.security;
 
 import com.pixel.demo.model.User;
 import com.pixel.demo.repository.UserRepository;
-import com.pixel.demo.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

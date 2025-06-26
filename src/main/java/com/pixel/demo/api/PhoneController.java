@@ -41,7 +41,7 @@ public class PhoneController {
         return ResponseEntity.ok(phoneResDto);
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<PhoneResDto> updatePhone(@RequestBody @Valid PhoneReqDto phoneDto) {
 
         PhoneResDto phoneResDto = phoneService.updatePhone(phoneDto);

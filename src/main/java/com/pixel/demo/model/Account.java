@@ -1,6 +1,7 @@
 package com.pixel.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,8 +23,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     User user;
     @Min(0)
     BigDecimal balance;
+    @Min(0)
+    BigDecimal startBalance;
 }

@@ -3,7 +3,6 @@ package com.pixel.demo.config.Jwt;
 import com.pixel.demo.model.User;
 import com.pixel.demo.security.CustomUserDetails;
 import com.pixel.demo.security.JWTUtils;
-import com.pixel.demo.service.RedisBlacklistService;
 import com.pixel.demo.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,7 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JWTUtils jwtUtils;
     private final UserService userService;
-    private final RedisBlacklistService blacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -38,11 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwtToken = authHeader.substring(7);
-        if (blacklistService.isBlacklisted(jwtToken)) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token in blacklist");
-            return;
-        }
-
         final String userIdStr = jwtUtils.extractUserId(jwtToken);
         if (userIdStr == null || SecurityContextHolder.getContext().getAuthentication() != null) {
             filterChain.doFilter(request, response);
