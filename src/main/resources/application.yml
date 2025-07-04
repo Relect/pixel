@@ -21,6 +21,10 @@ spring:
     change-log: classpath:db/master-changelog.xml
     enabled: true
 
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60
   data:
     redis:
       host: localhost
