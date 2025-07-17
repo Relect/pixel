@@ -75,6 +75,12 @@ public class GlobalExceptionHandler implements HandlerInterceptor {
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handle(Exception ex) {
+        log.warn("exception", ex);
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST, List.of());
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handle(HttpMessageNotReadableException ex) {
         Throwable rootCause = ex.getMostSpecificCause();

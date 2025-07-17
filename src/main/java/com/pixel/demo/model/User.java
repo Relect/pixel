@@ -1,5 +1,6 @@
 package com.pixel.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -38,13 +39,16 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
+    @JsonIgnoreProperties("user")
     List<EmailData> emailDataList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @NotEmpty
+    @JsonIgnoreProperties("user")
     List<PhoneData> phoneDataList = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")
     @NotNull
+    @JsonIgnoreProperties("user")
     Account account;
 }
