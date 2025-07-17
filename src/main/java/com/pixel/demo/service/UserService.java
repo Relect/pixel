@@ -21,7 +21,6 @@ public class UserService {
     private final UserMapper userMapper;
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "user", key = "#id")
     public User findUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id:" + id + " not found."));
